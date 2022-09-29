@@ -3,6 +3,7 @@
 def main [dev_folder: string = "~/dev"] {
 
 	ls $dev_folder | each { |$repo|
+		echo $"checking ($repo.name)"
 		cd $repo.name
 
 		if ($"($repo.name)/.git" | path exists) {
