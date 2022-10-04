@@ -9,12 +9,14 @@ def main [] {
 
 	let rustup_default = (rustup show | find "Default host" | parse --regex ':(.*)$' | str trim)
 
+	echo "Updating Rustup"
+
+	rustup update
+
 	echo "Installing utilities"
 
 	cargo install du-dust
 	cargo install bat
-	cargo install starship
-	cargo install nu
 	cargo install ripgrep
 	cargo install tokei
 	cargo install broot
@@ -25,13 +27,18 @@ def main [] {
 	cargo install zoxide
 	cargo install procs
 	cargo install tickrs
+	cargo install wasmer-cli --features "singlepass,cranelift"
+	cargo install wapm-cli
+	cargo install starship
+	cargo install nu
+	cargo install --locked gfold
 
 	if ($rustup_default.0.Capture1 | into string | str contains "aarch64-pc-windows-msvc") {
 		# waiting on ring to get updated
-		cargo install pueue --target x86_64-pc-windows-msvc
+		cargo install --locked pueue --target x86_64-pc-windows-msvc
 		cargo install mdcat --target x86_64-pc-windows-msvc
 	} else {
-		cargo install pueue
+		cargo install --locked pueue
 		cargo install mdcat
 	}
 
@@ -53,14 +60,9 @@ def main [] {
 	if ($rustup_default.0.Capture1 | into string | str contains "aarch64-pc-windows-msvc") {
 		# waiting on ring to get updated
 		cargo install cargo-edit --target x86_64-pc-windows-msvc
-	} else {
-		cargo install cargo-edit
-	}
-
-	if ($rustup_default.0.Capture1 | into string | str contains "aarch64-pc-windows-msvc") {
-		# waiting on ring to get updated
 		cargo install cargo-make --target x86_64-pc-windows-msvc
 	} else {
+		cargo install cargo-edit
 		cargo install cargo-make
 	}
 }
