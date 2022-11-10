@@ -29,7 +29,7 @@ def main [] {
 	cargo install tickrs
 	cargo install wasmer-cli --features "singlepass,cranelift"
 	cargo install wapm-cli
-	cargo install starship
+	cargo install starship --locked
 	cargo install nu
 	cargo install --locked gfold
 
